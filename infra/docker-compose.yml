@@ -15,3 +15,17 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ../frontend/build:/usr/share/nginx/html/
       - ../docs/:/usr/share/nginx/html/api/docs/
+  app:
+    hostname: app
+    build: ../backend/
+    command: poetry run python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ../backend/:/app
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    ports:
+      - '8000:8000'
+    env_file:
+      - ../backend/.env
