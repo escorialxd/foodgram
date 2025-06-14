@@ -18,7 +18,7 @@ services:
   app:
     hostname: app
     build: ../backend/
-    command: poetry run python manage.py runserver 0.0.0.0:8000
+    command: poetry run python manage.py runserver 0.0.0.0:7777
     volumes:
       - ../backend/:/app
     environment:
@@ -26,7 +26,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
     ports:
-      - '8000:8000'
+      - '7777:7777'
     env_file:
       - ../backend/.env
   postgres:
