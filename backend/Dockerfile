@@ -12,7 +12,6 @@ RUN pip install poetry==1.8.2
 
 ADD pyproject.toml poetry.lock /app/
 
-
 RUN poetry lock --no-update
 RUN poetry install --no-root
 
