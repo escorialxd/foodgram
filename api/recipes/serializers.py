@@ -6,7 +6,7 @@ from recipes.models import (
     RecipeIngredient,
     Favorite,
     ShoppingCart
-    )
+)
 from recipes.fields import Base64ImageField
 from api.users.serializers import CustomUserSerializer
 

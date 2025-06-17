@@ -100,4 +100,4 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Невозможно подписаться на самого себя!"
             )
-        return data 
+        return data
