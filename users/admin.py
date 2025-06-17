@@ -37,4 +37,4 @@ class SubscriptionAdmin(admin.ModelAdmin):
     list_display = ('user', 'author')
     search_fields = ('user__username', 'author__username')
     list_filter = ('user', 'author')
-    ordering = ('user', 'author') 
+    ordering = ('user', 'author')

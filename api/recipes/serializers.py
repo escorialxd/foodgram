@@ -1,7 +1,15 @@
 from rest_framework import serializers
-from recipes.models import Recipe, Ingredient, Tag, RecipeIngredient, Favorite, ShoppingCart
+from recipes.models import (
+    Recipe,
+    Ingredient,
+    Tag,
+    RecipeIngredient,
+    Favorite,
+    ShoppingCart
+    )
 from recipes.fields import Base64ImageField
 from api.users.serializers import CustomUserSerializer
+
 
 class IngredientSerializer(serializers.ModelSerializer):
     """Serializer for ingredients."""
@@ -9,11 +17,13 @@ class IngredientSerializer(serializers.ModelSerializer):
         model = Ingredient
         fields = ['id', 'name', 'measurement_unit']
 
+
 class TagSerializer(serializers.ModelSerializer):
     """Serializer for tags."""
     class Meta:
         model = Tag
         fields = ['id', 'name', 'color', 'slug']
+
 
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for recipes."""
@@ -23,7 +33,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     is_favorited = serializers.SerializerMethodField()
     is_in_shopping_cart = serializers.SerializerMethodField()
     author = CustomUserSerializer(read_only=True)
-    
+
     class Meta:
         model = Recipe
         fields = [
@@ -41,7 +51,9 @@ class RecipeSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if not request or request.user.is_anonymous:
             return False
-        return ShoppingCart.objects.filter(user=request.user, recipe=obj).exists()
+        return ShoppingCart.objects.filter(
+            user=request.user, recipe=obj).exists()
+
 
 class RecipeCreateSerializer(serializers.ModelSerializer):
     """Serializer for creating recipes."""
@@ -90,4 +102,4 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
         if 'tags' in validated_data:
             tags_data = validated_data.pop('tags')
             instance.tags.set(tags_data)
-        return super().update(instance, validated_data) 
+        return super().update(instance, validated_data)
