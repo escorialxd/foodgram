@@ -11,7 +11,6 @@ from .models import (
     RecipeIngredient,
     Favorite,
     ShoppingCart,
-    Subscription,
 )
 
 User = get_user_model()
@@ -123,7 +122,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     """Сериализатор рецептов."""
 
     tags = TagSerializer(many=True, read_only=True)
-    author = CustomUserSerializer(read_only=True)
+    author = serializers.SerializerMethodField()
     ingredients = RecipeIngredientSerializer(
         source="recipe_ingredients", many=True, read_only=True
     )
@@ -159,6 +158,10 @@ class RecipeSerializer(serializers.ModelSerializer):
         return ShoppingCart.objects.filter(
             user=request.user, recipe=obj
         ).exists()
+
+    def get_author(self, obj):
+        from api.users.serializers import CustomUserSerializer
+        return CustomUserSerializer(obj.author, context=self.context).data
 
 
 class RecipeCreateSerializer(serializers.ModelSerializer):
@@ -245,25 +248,3 @@ class ShoppingCartSerializer(serializers.ModelSerializer):
                 message="Рецепт уже в списке покупок",
             )
         ]
-
-
-class SubscriptionSerializer(serializers.ModelSerializer):
-    """Сериализатор подписок."""
-
-    class Meta:
-        model = Subscription
-        fields = ("user", "author")
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Subscription.objects.all(),
-                fields=("user", "author"),
-                message="Вы уже подписаны на этого пользователя",
-            )
-        ]
-
-    def validate(self, data):
-        if data["user"] == data["author"]:
-            raise serializers.ValidationError(
-                "Нельзя подписаться на самого себя"
-            )
-        return data
