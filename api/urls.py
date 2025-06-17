@@ -1,6 +1,3 @@
-"""
-Main URL configuration for the API.
-"""
 from django.urls import include, path
 
 urlpatterns = [

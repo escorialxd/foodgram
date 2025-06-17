@@ -1,12 +1,12 @@
-"""
-URL configuration for the recipes API.
-"""
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
 
-app_name = 'recipes'
+router = DefaultRouter()
+router.register('tags', views.TagViewSet, basename='tags')
+router.register('ingredients', views.IngredientViewSet, basename='ingredients')
+router.register('', views.RecipeViewSet, basename='recipes')
 
 urlpatterns = [
-    path('', views.RecipeListView.as_view(), name='recipe-list'),
-    path('<int:pk>/', views.RecipeDetailView.as_view(), name='recipe-detail'),
+    path('', include(router.urls)),
 ] 

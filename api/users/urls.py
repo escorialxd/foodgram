@@ -1,6 +1,3 @@
-"""
-URL configuration for the users API.
-"""
 from django.urls import path
 from . import views
 

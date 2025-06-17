@@ -1,3 +1,0 @@
-"""
-Recipes API package.
-""" 

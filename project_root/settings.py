@@ -1,6 +1,3 @@
-"""
-Django settings for Foodgram project.
-"""
 import os
 from pathlib import Path
 
@@ -150,9 +147,9 @@ DJOSER = {
     "USERNAME_VALIDATORS": [],
     "PASSWORD_VALIDATORS": [],
     "SERIALIZERS": {
-        "token_create": "djoser.serializers.TokenCreateSerializer",
-        "user_create": "djoser.serializers.UserCreateSerializer",
-        "user": "api.users.serializers.UserSerializer",
-        "current_user": "api.users.serializers.UserSerializer",
+        "token_create": "api.users.serializers.TokenCreateSerializer",
+        "user_create": "api.users.serializers.CustomUserCreateSerializer",
+        "user": "api.users.serializers.CustomUserSerializer",
+        "current_user": "api.users.serializers.CustomUserSerializer",
     },
 }

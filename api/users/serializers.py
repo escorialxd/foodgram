@@ -1,13 +1,10 @@
-"""
-Serializers for the users API.
-"""
-from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
 from djoser.serializers import UserCreateSerializer, UserSerializer
+from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from users.models import Subscription # Assuming Subscription model is in users app
-from recipes.fields import Base64ImageField # Assuming this field is reused
+from users.models import Subscription
+from recipes.fields import Base64ImageField
 
 User = get_user_model()
 
@@ -21,6 +18,11 @@ class TokenCreateSerializer(serializers.Serializer):
     def validate(self, attrs):
         email = attrs.get("email")
         password = attrs.get("password")
+
+        if not email or not password:
+            raise serializers.ValidationError(
+                "Пожалуйста, укажите email и пароль"
+            )
 
         user = authenticate(
             request=self.context.get("request"), email=email, password=password
