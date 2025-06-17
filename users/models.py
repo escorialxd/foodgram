@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import UniqueConstraint
 
+
 class User(AbstractUser):
     """Custom user model."""
     email = models.EmailField(
@@ -46,4 +47,4 @@ class Subscription(models.Model):
             UniqueConstraint(
                 fields=["user", "author"], name="unique_subscription"
             )
-        ] 
+        ]
