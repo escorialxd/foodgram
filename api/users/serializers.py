@@ -22,11 +22,6 @@ class TokenCreateSerializer(serializers.Serializer):
         email = attrs.get("email")
         password = attrs.get("password")
 
-        if not email or not password:
-            raise serializers.ValidationError(
-                "Пожалуйста, укажите email и пароль"
-            )
-
         user = authenticate(
             request=self.context.get("request"), email=email, password=password
         )
@@ -77,7 +72,7 @@ class CustomUserSerializer(UserSerializer):
 
     def get_is_subscribed(self, obj):
         request = self.context.get("request")
-        if request is None or request.user.is_anonymous:
+        if not request or request.user.is_anonymous:
             return False
         return Subscription.objects.filter(
             user=request.user, author=obj
