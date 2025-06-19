@@ -1,9 +1,12 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from djoser.views import UserViewSet
 
 app_name = 'users'
 
+router = DefaultRouter()
+router.register(r'', UserViewSet, basename='user')
+
 urlpatterns = [
-    path('', views.UserListView.as_view(), name='user-list'),
-    path('<int:pk>/', views.UserDetailView.as_view(), name='user-detail'),
+    path('', include(router.urls)),
 ]

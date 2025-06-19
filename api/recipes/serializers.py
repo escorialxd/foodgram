@@ -8,7 +8,7 @@ from recipes.models import (
     ShoppingCart
 )
 from recipes.fields import Base64ImageField
-from api.users.serializers import CustomUserSerializer
+from api.users.serializers import UserProfileSerializer
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -32,7 +32,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     image = Base64ImageField()
     is_favorited = serializers.SerializerMethodField()
     is_in_shopping_cart = serializers.SerializerMethodField()
-    author = CustomUserSerializer(read_only=True)
+    author = UserProfileSerializer(read_only=True)
 
     class Meta:
         model = Recipe
