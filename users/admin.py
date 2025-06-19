@@ -22,6 +22,13 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'is_active')
     ordering = ('username',)
 
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2'),
+        }),
+    )
+
     def followers_count(self, obj):
         return obj.following.count()
     followers_count.short_description = 'Подписчиков'

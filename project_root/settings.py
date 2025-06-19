@@ -148,8 +148,8 @@ DJOSER = {
     "PASSWORD_VALIDATORS": [],
     "SERIALIZERS": {
         "token_create": "api.users.serializers.TokenCreateSerializer",
-        "user_create": "api.users.serializers.CustomUserCreateSerializer",
-        "user": "api.users.serializers.CustomUserSerializer",
-        "current_user": "api.users.serializers.CustomUserSerializer",
+        "user_create": "api.users.serializers.UserRegistrationSerializer",
+        "user": "api.users.serializers.UserProfileSerializer",
+        "current_user": "api.users.serializers.UserProfileSerializer",
     },
 }

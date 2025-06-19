@@ -35,8 +35,8 @@ class TokenCreateSerializer(serializers.Serializer):
         return attrs
 
 
-class CustomUserCreateSerializer(UserCreateSerializer):
-    """Сериализатор создания пользователя."""
+class UserRegistrationSerializer(UserCreateSerializer):
+    """Serializer for user registration."""
 
     avatar = Base64ImageField(required=False)
 
@@ -53,8 +53,8 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         )
 
 
-class CustomUserSerializer(UserSerializer):
-    """Сериализатор пользователя."""
+class UserProfileSerializer(UserSerializer):
+    """Serializer for user profile."""
 
     is_subscribed = serializers.SerializerMethodField()
     avatar = Base64ImageField(required=False)
