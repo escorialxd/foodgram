@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.db import transaction
 from recipes.models import (
     Recipe,
     Ingredient,
@@ -75,6 +76,7 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
         """Convert instance to dictionary for response."""
         return RecipeSerializer(instance, context=self.context).data
 
+    @transaction.atomic
     def create(self, validated_data):
         ingredients_data = validated_data.pop('ingredients')
         tags_data = validated_data.pop('tags')
@@ -89,6 +91,7 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
             )
         return recipe
 
+    @transaction.atomic
     def update(self, instance, validated_data):
         if 'ingredients' in validated_data:
             ingredients_data = validated_data.pop('ingredients')

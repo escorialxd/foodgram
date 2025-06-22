@@ -6,7 +6,7 @@ from rest_framework import serializers
 
 
 class Base64ImageField(serializers.ImageField):
-    """Кастомное поле для работы с изображениями в формате base64."""
+    """Field for working with base64 encoded images."""
 
     def to_internal_value(self, data):
         if isinstance(data, str) and data.startswith("data:image"):
