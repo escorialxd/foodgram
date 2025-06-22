@@ -15,7 +15,7 @@ from recipes.models import (
     ShoppingCart,
     Tag,
 )
-from api.recipes.pagination import CustomPagination
+from api.recipes.pagination import RecipePagination
 from api.recipes.permissions import IsAuthorOrReadOnly
 from .serializers import (
     IngredientSerializer,
@@ -26,7 +26,7 @@ from .serializers import (
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
-    """Вьюсет тегов."""
+    """Tag viewset."""
 
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
@@ -34,7 +34,7 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
-    """Вьюсет ингредиентов."""
+    """Ingredient viewset."""
 
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
@@ -43,11 +43,11 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
-    """Вьюсет рецептов."""
+    """Recipe viewset."""
 
     queryset = Recipe.objects.all()
     permission_classes = (IsAuthorOrReadOnly,)
-    pagination_class = CustomPagination
+    pagination_class = RecipePagination
     filterset_class = RecipeFilter
 
     def get_serializer_class(self):

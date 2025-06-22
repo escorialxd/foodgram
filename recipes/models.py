@@ -11,7 +11,7 @@ MIN_INGREDIENT_AMOUNT = 1
 
 
 class Tag(models.Model):
-    """Модель тега."""
+    """Tag model."""
 
     name = models.CharField(
         "Название",
@@ -39,7 +39,7 @@ class Tag(models.Model):
 
 
 class Ingredient(models.Model):
-    """Модель ингредиента."""
+    """Ingredient model."""
 
     name = models.CharField(
         "Название",
@@ -65,7 +65,7 @@ class Ingredient(models.Model):
 
 
 class Recipe(models.Model):
-    """Модель рецепта."""
+    """Recipe model."""
 
     author = models.ForeignKey(
         User,
@@ -118,7 +118,7 @@ class Recipe(models.Model):
 
 
 class RecipeIngredient(models.Model):
-    """Модель связи рецепта и ингредиента."""
+    """Recipe ingredient relationship model."""
 
     recipe = models.ForeignKey(
         Recipe,
@@ -153,7 +153,7 @@ class RecipeIngredient(models.Model):
 
 
 class Favorite(models.Model):
-    """Модель избранного."""
+    """Favorite model."""
 
     user = models.ForeignKey(
         User,
@@ -177,7 +177,7 @@ class Favorite(models.Model):
 
 
 class ShoppingCart(models.Model):
-    """Модель списка покупок."""
+    """Shopping cart model."""
 
     user = models.ForeignKey(
         User,

@@ -10,7 +10,7 @@ User = get_user_model()
 
 
 class TokenCreateSerializer(serializers.Serializer):
-    """Сериализатор создания токена."""
+    """Token creation serializer."""
 
     email = serializers.EmailField(required=True)
     password = serializers.CharField(required=True, write_only=True)
@@ -82,7 +82,7 @@ class UserProfileSerializer(UserSerializer):
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    """Сериализатор подписок."""
+    """Subscription serializer."""
 
     class Meta:
         model = Subscription

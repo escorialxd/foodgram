@@ -7,8 +7,8 @@ User = get_user_model()
 
 
 @admin.register(User)
-class CustomUserAdmin(UserAdmin):
-    """Админ-панель для пользователей."""
+class UserAdmin(UserAdmin):
+    """User admin panel."""
     list_display = (
         'username',
         'email',
@@ -31,16 +31,16 @@ class CustomUserAdmin(UserAdmin):
 
     def followers_count(self, obj):
         return obj.following.count()
-    followers_count.short_description = 'Подписчиков'
+    followers_count.short_description = 'Followers'
 
     def following_count(self, obj):
         return obj.follower.count()
-    following_count.short_description = 'Подписок'
+    following_count.short_description = 'Following'
 
 
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    """Админ-панель для подписок."""
+    """Subscription admin panel."""
     list_display = ('user', 'author')
     search_fields = ('user__username', 'author__username')
     list_filter = ('user', 'author')
