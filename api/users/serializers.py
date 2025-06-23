@@ -101,3 +101,16 @@ class SubscriptionSerializer(serializers.ModelSerializer):
                 "Невозможно подписаться на самого себя!"
             )
         return data
+
+
+class AvatarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("avatar",)
+
+
+class SubscriptionListSerializer(serializers.ModelSerializer):
+    author = UserProfileSerializer(read_only=True)
+    class Meta:
+        model = Subscription
+        fields = ("author",)
