@@ -132,3 +132,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
             'attachment; filename="shopping_list.txt"'
         )
         return response
+
+    @action(detail=True, methods=['get'], permission_classes=[])
+    def get_link(self, request, pk=None):
+        recipe = self.get_object()
+        short_link = request.build_absolute_uri(f'/recipes/{recipe.id}/')
+        return Response({'short-link': short_link})
