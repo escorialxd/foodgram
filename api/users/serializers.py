@@ -111,6 +111,7 @@ class AvatarSerializer(serializers.ModelSerializer):
 
 class SubscriptionListSerializer(serializers.ModelSerializer):
     author = UserProfileSerializer(read_only=True)
+
     class Meta:
         model = Subscription
         fields = ("author",)

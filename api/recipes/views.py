@@ -5,6 +5,7 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from api.recipes.filters import IngredientFilter, RecipeFilter
 from recipes.models import (
@@ -138,3 +139,38 @@ class RecipeViewSet(viewsets.ModelViewSet):
         recipe = self.get_object()
         short_link = request.build_absolute_uri(f'/recipes/{recipe.id}/')
         return Response({'short-link': short_link})
+
+
+class FavoriteListView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        favorites = Favorite.objects.filter(user=user)
+        recipes = [fav.recipe for fav in favorites]
+        serializer = RecipeSerializer(recipes, many=True, context={'request': request})
+        return Response(serializer.data)
+
+
+class DownloadShoppingCartView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        ingredients = (
+            RecipeIngredient.objects.filter(recipe__shopping_cart__user=user)
+            .values("ingredient__name", "ingredient__measurement_unit")
+            .annotate(amount=Sum("amount"))
+        )
+        shopping_list = ["Список покупок:\n"]
+        for ingredient in ingredients:
+            shopping_list.append(
+                f"{ingredient['ingredient__name']} - "
+                f"{ingredient['amount']} "
+                f"{ingredient['ingredient__measurement_unit']}\n"
+            )
+        response = HttpResponse(
+            "".join(shopping_list), content_type="text/plain"
+        )
+        response["Content-Disposition"] = (
+            'attachment; filename="shopping_list.txt"'
+        )
+        return response

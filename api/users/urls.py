@@ -9,4 +9,7 @@ router.register(r'', CreateUserViewSet, basename='user')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('users/subscriptions/', CreateUserViewSet.as_view({'get': 'subscriptions'}), name='subscriptions'),
+    path('users/<int:pk>/subscribe/', CreateUserViewSet.as_view({'post': 'subscribe', 'delete': 'subscribe'}), name='subscribe'),
+    path('users/me/', CreateUserViewSet.as_view({'get': 'me', 'patch': 'partial_update'}), name='me'),
 ]
