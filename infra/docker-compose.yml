@@ -20,9 +20,8 @@ services:
     build:
       dockerfile: ../DockerfileBackend
       context: ../backend
-#    command: sh -c "poetry run python manage.py collectstatic --no-input
-#      && gunicorn --workers=4 --reload --max-requests=1000 project_root.wsgi -b 0.0.0.0:7777"
-    command: sh -c "poetry run python manage.py runserver 0.0.0.0:7777"
+    command: sh -c "poetry run python manage.py collectstatic --no-input
+      && gunicorn --workers=4 --reload --max-requests=1000 project_root.wsgi -b 0.0.0.0:7777"
     volumes:
       - ../backend/:/app
     ports:

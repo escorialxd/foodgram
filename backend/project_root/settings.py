@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from pprint import pprint
 
 from dotenv import load_dotenv
 
@@ -16,6 +15,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-your-secret-key-here')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS')
+
 
 # Application definition
 INSTALLED_APPS = [
