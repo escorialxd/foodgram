@@ -115,18 +115,37 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
 class AvatarSerializer(serializers.ModelSerializer):
     avatar = HybridImageField(required=False)
+
     class Meta:
         model = User
         fields = ("avatar",)
 
 
 class SubscriptionListSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(source='author.id', read_only=True)
-    email = serializers.EmailField(source='author.email', read_only=True)
-    username = serializers.CharField(source='author.username', read_only=True)
-    first_name = serializers.CharField(source='author.first_name', read_only=True)
-    last_name = serializers.CharField(source='author.last_name', read_only=True)
-    avatar = HybridImageField(source='author.avatar', required=False)
+    id = serializers.IntegerField(
+        source='author.id',
+        read_only=True
+    )
+    email = serializers.EmailField(
+        source='author.email',
+        read_only=True
+    )
+    username = serializers.CharField(
+        source='author.username',
+        read_only=True
+    )
+    first_name = serializers.CharField(
+        source='author.first_name',
+        read_only=True
+    )
+    last_name = serializers.CharField(
+        source='author.last_name',
+        read_only=True
+    )
+    avatar = HybridImageField(
+        source='author.avatar',
+        required=False
+    )
     is_subscribed = serializers.SerializerMethodField()
     recipes = serializers.SerializerMethodField()
     recipes_count = serializers.SerializerMethodField()
@@ -142,11 +161,17 @@ class SubscriptionListSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if not request or request.user.is_anonymous:
             return False
-        return Subscription.objects.filter(user=request.user, author=obj.author).exists()
+        return Subscription.objects.filter(
+            user=request.user,
+            author=obj.author
+        ).exists()
 
     def get_recipes(self, obj):
         recipes_qs = obj.author.recipes.all()[:3]
-        return ShortRecipeSerializer(recipes_qs, many=True, context=self.context).data
+        return ShortRecipeSerializer(
+            recipes_qs, many=True,
+            context=self.context
+        ).data
 
     def get_recipes_count(self, obj):
         return obj.author.recipes.count()

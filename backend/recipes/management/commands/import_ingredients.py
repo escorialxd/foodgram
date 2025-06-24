@@ -2,7 +2,6 @@ import json
 
 from django.core.management.base import BaseCommand
 
-from project_root.settings import BASE_DIR
 from recipes.models import Ingredient
 
 
