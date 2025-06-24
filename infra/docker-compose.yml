@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+
+  frontend:
+    container_name: foodgram-front
+    build: ../frontend
+    volumes:
+      - ../frontend/:/app/result_build/
+  nginx:
+    container_name: foodgram-proxy
+    image: nginx:1.25.4-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ../frontend/build:/usr/share/nginx/html/
+      - ../docs/:/usr/share/nginx/html/api/docs/
+  app:
+    hostname: app
+    build:
+      dockerfile: ../DockerfileBackend
+      context: ../backend
+#    command: sh -c "poetry run python manage.py collectstatic --no-input
+#      && gunicorn --workers=4 --reload --max-requests=1000 project_root.wsgi -b 0.0.0.0:7777"
+    command: sh -c "poetry run python manage.py runserver 0.0.0.0:7777"
+    volumes:
+      - ../backend/:/app
+    ports:
+      - '7777:7777'
+  postgres:
+    image: postgres:15.4
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${postgres}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_PORT=${DB_PORT}
+    ports:
+      - "5432:5432"
+    env_file:
+      - "../.env"
+    volumes:
+      - ./var/postgres_data/:/var/lib/postgresql/data/:rw
