@@ -1,44 +1,51 @@
-# Foodgram - Платформа для обмена рецептами
+# Foodgram – Recipe Sharing Platform
 
-## Адрес сервиса: 
-- https://foodgram.vadim-polegaev-kittygram.ru/
+## Service URL
 
-## Описание проекта
+- [https://foodgram.vadim-polegaev-kittygram.ru/](https://foodgram.vadim-polegaev-kittygram.ru/)
 
-Foodgram - это веб-платформа для обмена кулинарными рецептами, построенная на Django REST Framework. Пользователи могут создавать, просматривать, сохранять в избранное рецепты, подписываться на авторов и формировать список покупок.
+## Project Overview
 
-## Основные возможности
+Foodgram is a web-based platform for sharing culinary recipes, built with Django REST Framework. Users can create, browse, and favorite recipes, follow authors, and generate shopping lists.
 
-### Пользователи
-- Регистрация и аутентификация через email
-- Профиль пользователя с аватаром
-- Подписки на других авторов
-- Просмотр списка подписчиков и подписок
+## Key Features
 
-### Рецепты
-- Создание, редактирование и удаление рецептов
-- Загрузка изображений в формате Base64
-- Добавление ингредиентов с указанием количества
-- Тегирование рецептов
-- Указание времени приготовления
+### Users
 
-### Избранное
-- Добавление рецептов в избранное
-- Просмотр списка избранных рецептов
+- **Registration and authentication** via email
+- **User profiles** with avatar upload
+- **Follow/unfollow** other authors
+- View **followers** and **following** lists
 
-### Список покупок
-- Добавление рецептов в список покупок
-- Скачивание списка покупок в формате PDF
-- Автоматический подсчет необходимых ингредиентов
+### Recipes
 
-### Ингредиенты и теги
-- Предустановленная база ингредиентов
-- Система тегов для категоризации рецептов
-- Уникальные ограничения для предотвращения дублирования
+- **Create, update, and delete** recipes
+- **Image upload** (Base64 format)
+- **Add ingredients** with quantity specifications
+- **Tag** recipes for categorization
+- Specify **cooking time**
 
-## Технологический стек
+### Favorites
+
+- Add recipes to **Favorites**
+- Browse **Favorite recipes** list
+
+### Shopping List
+
+- Add recipes to **Shopping Cart**
+- **Download shopping list** as a PDF
+- **Automatic aggregation** of required ingredients
+
+### Ingredients & Tags
+
+- Pre-populated **ingredients** database
+- **Tagging system** for recipe categorization
+- **Unique constraints** to prevent duplicates
+
+## Technology Stack
 
 ### Backend
+
 - **Python 3.13**
 - **Django 5.2**
 - **Django REST Framework 3.15.2**
@@ -47,211 +54,238 @@ Foodgram - это веб-платформа для обмена кулинарн
 - **Pillow 11.2.1**
 - **Poetry**
 
-### Аутентификация
-- Token-based аутентификация
-- JWT токены (djangorestframework-simplejwt)
-- Кастомизированная система регистрации
+### Authentication
 
-## Структура проекта
+- **Token-based authentication**
+- **JWT tokens** (djangorestframework-simplejwt)
+- **Custom** registration flow
+
+## Project Structure
 
 ```
 foodgram/
-├── api/                    # API приложение
-│   ├── recipes/           # API для рецептов
+├── api/                    # API application
+│   ├── recipes/            # Recipe API
 │   │   ├── serializers.py
 │   │   ├── urls.py
 │   │   └── views.py
-│   └── users/             # API для пользователей
+│   └── users/              # User API
 │       ├── serializers.py
 │       ├── urls.py
 │       └── views.py
-├── recipes/               # Приложение рецептов
-│   ├── models.py         # Модели данных
-│   ├── admin.py          # Админ-панель
-│   ├── fields.py         # Кастомные поля
-│   └── management/       # Команды управления
-├── users/                # Приложение пользователей
-│   ├── models.py         # Кастомная модель пользователя
-│   └── admin.py          # Админ-панель
-├── project_root/         # Основные настройки проекта
-│   ├── settings.py       # Настройки Django
-│   ├── urls.py           # Главные URL-маршруты
-│   └── wsgi.py           # WSGI конфигурация
-├── data/                 # Данные для импорта
-│   ├── ingredients.json  # JSON с ингредиентами
-│   └── ingredients.csv   # CSV с ингредиентами
-├── media/                # Загруженные файлы
-├── static/               # Статические файлы
-├── requirements.txt      # Зависимости (альтернатива)
-├── pyproject.toml        # Poetry конфигурация
-├── Dockerfile           # Docker конфигурация
-└── manage.py            # Django CLI
+├── recipes/                # Recipes app
+│   ├── models.py           # Data models
+│   ├── admin.py            # Admin panel
+│   ├── fields.py           # Custom fields
+│   └── management/         # Management commands
+├── users/                  # Users app
+│   ├── models.py           # Custom User model
+│   └── admin.py            # Admin panel
+├── project_root/           # Main project settings
+│   ├── settings.py         # Django settings
+│   ├── urls.py             # Root URL routes
+│   └── wsgi.py             # WSGI configuration
+├── data/                   # Import data
+│   ├── ingredients.json    # Ingredients JSON dump
+│   └── ingredients.csv     # Ingredients CSV file
+├── media/                  # Uploaded files
+├── static/                 # Static files
+├── requirements.txt        # Dependencies (alternative)
+├── pyproject.toml          # Poetry configuration
+├── Dockerfile              # Docker setup
+└── manage.py               # Django CLI
 ```
 
-## Модели данных
+## Data Models
 
-### User (Пользователь)
-- Расширенная модель пользователя Django
-- Email как основное поле для входа
-- Поддержка аватаров
+### User
 
-### Recipe (Рецепт)
-- Связь с автором (User)
-- Название, описание, изображение
-- Время приготовления
-- Связи с ингредиентами и тегами
+- Extends Django’s **User** model
+- **Email** used as login field
+- Supports **avatar** uploads
 
-### Ingredient (Ингредиент)
-- Название и единица измерения
-- Уникальное ограничение на комбинацию полей
+### Recipe
 
-### Tag (Тег)
-- Название, цвет (HEX), slug
-- Используется для категоризации рецептов
+- Linked to **author** (User)
+- Includes **title**, **description**, **image**
+- **Cooking time** field
+- Many-to-many relations with **ingredients** and **tags**
 
-### RecipeIngredient (Связь рецепт-ингредиент)
-- Промежуточная модель для связи рецептов и ингредиентов
-- Количество ингредиента в рецепте
+### Ingredient
 
-### Favorite (Избранное)
-- Связь пользователь-рецепт для избранного
+- **Name** and **measurement unit**
+- **Unique constraint** on (name, unit)
 
-### ShoppingCart (Список покупок)
-- Связь пользователь-рецепт для списка покупок
+### Tag
 
-### Subscription (Подписка)
-- Связь между пользователями для подписок
+- **Name**, **color** (HEX), and **slug**
+- Used for recipe categorization
 
-## Установка и запуск
+### RecipeIngredient
 
-### Предварительные требования
-- Python 3.13
-- Poetry
-- PostgreSQL
+- Through model connecting **recipes** and **ingredients**
+- Stores **amount** per ingredient
 
-### 1. Клонирование репозитория
+### Favorite
+
+- Connects **User** and **Recipe** for favorites
+
+### ShoppingCart
+
+- Connects **User** and **Recipe** for shopping lists
+
+### Subscription
+
+- Connects **Users** to allow following
+
+## Installation and Setup
+
+### Prerequisites
+
+- **Python 3.13**
+- **Poetry**
+- **PostgreSQL**
+
+### 1. Clone the repository
+
 ```bash
 git clone <repository-url>
 cd foodgram
 ```
 
-### 2. Установка зависимостей
+### 2. Install dependencies
+
 ```bash
-# Установка Poetry (если не установлен)
+# Install Poetry (if not already installed)
 pip install poetry
 
-# Установка зависимостей проекта
+# Install project dependencies
 poetry install
 ```
 
-### 3. Настройка переменных окружения
+### 3. Configure environment variables
 
-Создайте файл `.env` в корне проекта:
+Create a `.env` file in the project root:
+
 ```env
 SECRET_KEY=your-secret-key-here
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 
-# База данных (для PostgreSQL)
-DB_ENGINE=django.db.backends.postgresql
+# PostgreSQL settings
+db_engine=django.db.backends.postgresql
 DB_NAME=foodgram_db
 DB_USER=postgres
 DB_PASSWORD=your_password
 DB_HOST=localhost
 DB_PORT=5432
 
-# Для SQLite (по умолчанию)
+# For SQLite (default)
 # DB_ENGINE=django.db.backends.sqlite3
 # DB_NAME=db.sqlite3
 ```
 
-### 4. Применение миграций
+### 4. Apply database migrations
+
 ```bash
 poetry run python manage.py migrate
 ```
 
-### 5. Создание суперпользователя
+### 5. Create a superuser
+
 ```bash
 poetry run python manage.py createsuperuser
 ```
 
-### 6. Импорт данных (опционально)
+### 6. Import data (optional)
+
 ```bash
-# Импорт ингредиентов из JSON
+# Import ingredients from JSON
 poetry run python manage.py load_ingredients data/ingredients.json
 
-# Импорт ингредиентов из CSV
+# Import ingredients from CSV
 poetry run python manage.py load_ingredients data/ingredients.csv
 ```
 
-### 7. Запуск сервера
+### 7. Run the development server
+
 ```bash
 poetry run python manage.py runserver
 ```
 
-## API Эндпоинты
+## API Endpoints
 
-### Аутентификация
-- `POST /api/users/` - Регистрация пользователя
-- `POST /api/auth/token/login/` - Получение токена
-- `POST /api/auth/token/logout/` - Выход
+### Authentication
 
-### Пользователи
-- `GET /api/users/` - Список пользователей
-- `GET /api/users/{id}/` - Профиль пользователя
-- `GET /api/users/me/` - Текущий пользователь
-- `PATCH /api/users/me/` - Обновление профиля
+- `POST /api/users/` – User registration
+- `POST /api/auth/token/login/` – Obtain token
+- `POST /api/auth/token/logout/` – Logout
 
-### Подписки
-- `GET /api/users/subscriptions/` - Мои подписки
-- `POST /api/users/{id}/subscribe/` - Подписаться на пользователя
-- `DELETE /api/users/{id}/subscribe/` - Отписаться от пользователя
+### Users
 
-### Рецепты
-- `GET /api/recipes/` - Список рецептов
-- `POST /api/recipes/` - Создание рецепта
-- `GET /api/recipes/{id}/` - Детали рецепта
-- `PATCH /api/recipes/{id}/` - Обновление рецепта
-- `DELETE /api/recipes/{id}/` - Удаление рецепта
+- `GET /api/users/` – List users
+- `GET /api/users/{id}/` – Retrieve user profile
+- `GET /api/users/me/` – Retrieve current user
+- `PATCH /api/users/me/` – Update profile
 
-### Избранное
-- `GET /api/recipes/favorite/` - Мои избранные рецепты
-- `POST /api/recipes/{id}/favorite/` - Добавить в избранное
-- `DELETE /api/recipes/{id}/favorite/` - Удалить из избранного
+### Subscriptions
 
-### Список покупок
-- `GET /api/recipes/download_shopping_cart/` - Скачать список покупок
-- `POST /api/recipes/{id}/shopping_cart/` - Добавить в список покупок
-- `DELETE /api/recipes/{id}/shopping_cart/` - Удалить из списка покупок
+- `GET /api/users/subscriptions/` – My subscriptions
+- `POST /api/users/{id}/subscribe/` – Follow user
+- `DELETE /api/users/{id}/subscribe/` – Unfollow user
 
-### Ингредиенты и теги
-- `GET /api/ingredients/` - Список ингредиентов
-- `GET /api/tags/` - Список тегов
+### Recipes
+
+- `GET /api/recipes/` – List recipes
+- `POST /api/recipes/` – Create recipe
+- `GET /api/recipes/{id}/` – Retrieve recipe
+- `PATCH /api/recipes/{id}/` – Update recipe
+- `DELETE /api/recipes/{id}/` – Delete recipe
+
+### Favorites
+
+- `GET /api/recipes/favorite/` – My favorites
+- `POST /api/recipes/{id}/favorite/` – Add to favorites
+- `DELETE /api/recipes/{id}/favorite/` – Remove from favorites
+
+### Shopping Cart
+
+- `GET /api/recipes/download_shopping_cart/` – Download shopping list
+- `POST /api/recipes/{id}/shopping_cart/` – Add to cart
+- `DELETE /api/recipes/{id}/shopping_cart/` – Remove from cart
+
+### Ingredients & Tags
+
+- `GET /api/ingredients/` – List ingredients
+- `GET /api/tags/` – List tags
 
 ## Docker
 
-### Сборка и запуск с Docker
+### Build and Run with Docker
+
 ```bash
-# Сборка образа
+# Build the Docker image
 docker build -t foodgram .
 
-# Запуск контейнера
+# Run the container
 docker run -p 8000:8000 foodgram
 ```
 
-## Команды управления
+## Management Commands
 
-### Импорт данных
 ```bash
-# Импорт ингредиентов
+# Import ingredients
 poetry run python manage.py load_ingredients <file_path>
 
-# Создание тегов
+# Create tags
 poetry run python manage.py create_tags
 ```
 
-## Лицензия
-Проект разработан в образовательных целях.
+## License
 
-## Автор
-*Полегаев Вадим*
+This project is intended for educational purposes.
+
+## Author
+
+**Vadim Polegaev**
+
